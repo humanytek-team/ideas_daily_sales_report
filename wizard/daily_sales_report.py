@@ -69,7 +69,8 @@ class DailySalesReport(models.TransientModel):
             sale_orders_invoices = sale_orders.mapped('invoice_ids').filtered(
                 lambda inv: inv.type == 'out_invoice' and
                 inv.date_invoice == wizard_data['date'] and
-                inv.state != 'cancel'
+                inv.state != 'cancel' and
+                inv.date_due == inv.date_invoice
             )
 
             sales_total = sum(
@@ -128,9 +129,13 @@ class DailySalesReport(models.TransientModel):
                     )
             extra_data['invoices_by_pay_method_id'] = invoices_by_pay_method_id
 
-            sale_orders_invoices_with_credit = sale_orders_invoices.filtered(
-                lambda inv: inv.date_due > inv.date_invoice
-            )
+            sale_orders_invoices_with_credit = sale_orders.mapped(
+                'invoice_ids').filtered(
+                    lambda inv: inv.type == 'out_invoice' and
+                    inv.date_invoice == wizard_data['date'] and
+                    inv.state != 'cancel' and
+                    inv.date_due > inv.date_invoice
+                    )
 
             credit_total = sum(
                 sale_orders_invoices_with_credit.mapped('amount_total'))
@@ -230,6 +235,22 @@ class DailySalesReport(models.TransientModel):
                     ).mapped('amount_total'))
             extra_data['total_invoices_cancelled_no_credit'] = \
                 total_invoices_cancelled_no_credit
+
+            sale_orders_invoices_with_credit_data = list()
+            for invoice in sale_orders_invoices_with_credit:
+                customer_name = \
+                    invoice.partner_id.name.upper()
+                sale_orders_invoices_with_credit_data.append(
+                    {
+                        'move_name': invoice.move_name,
+                        'customer': customer_name,
+                        'amount_total': invoice.amount_total,
+                        'state': invoice.state,
+                        'state_label': INVOICE_STATES[invoice.state],
+                    }
+                )
+            extra_data['sale_orders_invoices_with_credit_data'] = \
+                sale_orders_invoices_with_credit_data
 
             data['extra_data'] = extra_data
 
