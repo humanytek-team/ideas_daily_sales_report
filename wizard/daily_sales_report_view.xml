@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="daily_sales_report_view" model="ir.ui.view">
+        <field name="name">Daily Sales Report</field>
+        <field name="model">daily.sales.report</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+                <group col="4">
+                    <field name="warehouse_id" widget="radio"/>
+                    <field name="date"/>
+                </group>
+                <footer>
+                    <button
+                        name="print_daily_sales_report"
+                        string="Print"
+                        type="object"
+                        default_focus="1"
+                        class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_daily_sales_report_menu" model="ir.actions.act_window">
+        <field name="name">Daily Sales Report</field>
+        <field name="res_model">daily.sales.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="daily_sales_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_print_daily_sales_report"
+        name="Daily sales report"
+        parent="sales_team.menu_sale_report"
+        action="action_daily_sales_report_menu"
+        groups=""
+       />
+
+</odoo>

@@ -1,0 +1,205 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* daily_sales_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-14 21:18+0000\n"
+"PO-Revision-Date: 2017-07-14 17:21-0400\n"
+"Last-Translator: Manuel Marquez <buzondemam@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Fecha:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>Generated:</strong>"
+msgstr "<strong>Generado:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>Total payments:</strong>"
+msgstr "<strong>Total de recepciones de pago:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>Total sales of the day:</strong>"
+msgstr "<strong>Total de ventas del dia:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>User:</strong>"
+msgstr "<strong>Usuario:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "<strong>Warehouse:</strong>"
+msgstr "<strong>Almacén:</strong>"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Breakdown of invoices by payment method"
+msgstr "Desglose de Facturas por Método de Pago"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.daily_sales_report_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:36
+#, python-format
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Customer Refund"
+msgstr "Devoluciones"
+
+#. module: daily_sales_report
+#: model:ir.actions.act_window,name:daily_sales_report.action_daily_sales_report_menu
+#: model:ir.model,name:daily_sales_report.model_daily_sales_report
+msgid "Daily Sales Report"
+msgstr "Ventas Diarias"
+
+#. module: daily_sales_report
+#: model:ir.actions.report.xml,name:daily_sales_report.daily_sales_report
+#: model:ir.ui.menu,name:daily_sales_report.menu_print_daily_sales_report
+msgid "Daily sales report"
+msgstr "Ventas Diarias"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_display_name
+#: model:ir.model.fields,field_description:daily_sales_report.field_report_daily_sales_report_report_sales_display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:31
+#, python-format
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_id
+#: model:ir.model.fields,field_description:daily_sales_report.field_report_daily_sales_report_report_sales_id
+msgid "ID"
+msgstr "ID"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Invoices Cancelled"
+msgstr "Facturas Canceladas"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report___last_update
+#: model:ir.model.fields,field_description:daily_sales_report.field_report_daily_sales_report_report_sales___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:243
+#, python-format
+msgid "No sales for the warehouse and day selected"
+msgstr "No hay ventas para el almacén y dia seleccionado."
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:34
+#, python-format
+msgid "Open"
+msgstr "Abierto"
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:35
+#, python-format
+msgid "Paid"
+msgstr "Pagado"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.daily_sales_report_view
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: daily_sales_report
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:32
+#: code:addons/daily_sales_report/wizard/daily_sales_report.py:33
+#, python-format
+msgid "Pro-forma"
+msgstr "Pro-forma"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.daily_sales_report_view
+msgid "Report Options"
+msgstr "Opciones del informe"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Total Credit"
+msgstr "Crédito total"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Total Invoices"
+msgstr "Total Facturas"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.report_sales_document
+msgid "Total Sales"
+msgstr "Total Ventas"
+
+#. module: daily_sales_report
+#: model:ir.model.fields,field_description:daily_sales_report.field_daily_sales_report_warehouse_id
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: daily_sales_report
+#: model:ir.ui.view,arch_db:daily_sales_report.daily_sales_report_view
+msgid "or"
+msgstr "ó"
+
+#. module: daily_sales_report
+#: model:ir.model,name:daily_sales_report.model_report_daily_sales_report_report_sales
+msgid "report.daily_sales_report.report_sales"
+msgstr "report.daily_sales_report.report_sales"

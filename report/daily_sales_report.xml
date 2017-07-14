@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="daily_sales_report"
+            string="Daily sales report"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="daily_sales_report.report_sales"
+            name="daily_sales_report.report_sales"
+        />
+    </data>
+</odoo>

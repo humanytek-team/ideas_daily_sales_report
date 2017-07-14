@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_sales">
+            <t t-call="report.html_container">
+                <t
+                    t-call="daily_sales_report.report_sales_document"
+                    t-lang="user.partner_id.lang"/>
+            </t>
+        </template>
+
+        <!-- Translatable template -->
+        <template id="report_sales_document">
+            <t t-set="docs" t-value="docs.with_context({'lang':user.partner_id.lang})" />
+            <t t-call="report.external_layout">
+
+                <div class="page" style="font-size:16px;">
+
+
+                    <div
+                        class="row text-right"
+                        style="padding-right: 35px;">
+                        <strong>Generated:</strong>
+                        <span t-esc="data['datetime']" />
+                    </div>
+
+                    <div
+                        class="row table table-condensed"
+                        style="font-size: 14px; background-color: #DDDDDD;text-shadow: 1px 1px 1px #888888;border: 1px solid #ddd;border-collapse: collapse;padding: 5px;">
+
+                    <div class="col-xs-7">
+                    <div class="row">
+                        <strong>Warehouse:</strong>
+                        <span t-field="docs[0].warehouse_id.name" />
+                    </div>
+
+                    <div class="row">
+                        <strong>User:</strong>
+                        <span t-field="user.name" />
+                    </div>
+
+                    <div class="row">
+                        <strong>Total sales of the day:</strong>
+                        <span t-esc="data['sales_total']" />
+                    </div>
+
+                    <div class="row">
+                        <strong>Total payments:</strong>
+                        <span t-esc="data['payments_done_total']" />
+                    </div>
+
+                    <div class="row">
+                        <strong>Date:</strong>
+                        <span t-esc="data['date']" />
+                    </div>
+
+                    <div
+                        class="row"
+                        style="margin-top: 10px;">
+                        <div class="col-xs-4">
+                            <strong>
+                            Invoices
+                            <span class="badge">
+                                    <span t-esc="data['count_total_sale_orders_invoices']" />
+                            </span>
+                            </strong>
+                        </div>
+
+                        <div class="col-xs-3 text-right">
+                            <span t-esc="data['sales_total']" />
+                        </div>
+
+                        <div class="col-xs-2 text-right">
+                            <span t-esc="data['total_customer_refund']" />
+                        </div>
+
+                        <div class="col-xs-3 text-right">
+                            <span t-esc="data['sales_total_minus_customer_refund']" />
+                        </div>
+                    </div>
+
+                    <hr style="margin-top:0; margin-bottom:0;"/>
+
+                    <div
+                        class="row"
+                        t-foreach="data['pay_methods_ids']"
+                        t-as="pay_method_id"
+                        style="font-size: 13px;">
+
+                        <div class="col-xs-4" style="padding-left:20px;">
+                            <strong>
+                            <span
+                                t-esc="data['pay_methods_names_by_id'][pay_method_id]" />
+                            <span class="badge">
+                                <span t-esc="data['count_total_invoices_by_pay_method_id'][pay_method_id]" />
+                            </span>
+                            </strong>
+                        </div>
+
+                        <div class="col-xs-3 text-right">
+                            <span
+                                t-esc="data['total_invoices_by_pay_method_id'][pay_method_id]" />
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="font-size: 13px;">
+
+                        <div class="col-xs-4" style="padding-left:20px;">
+                            <strong>
+                            Customer Refund
+                            <span class="badge">
+                                <span t-esc="data['count_sale_orders_invoices_out_refund']" />
+                            </span>
+                            </strong>
+                        </div>
+
+                        <div class="col-xs-2 col-xs-offset-3 text-right">
+                            <span
+                                t-esc="data['total_customer_refund']" />
+                        </div>
+
+                    </div>
+
+                    </div>
+
+                    <div class="col-xs-5 mt32 mb32">
+                    <div
+                        class="row"
+                        t-foreach="data['pay_methods_ids']"
+                        t-as="pay_method_id"
+                        style="font-size: 13px;">
+
+                        <div class="col-xs-4">
+                        <span
+                            t-esc="data['pay_methods_names_by_id'][pay_method_id]" />
+                        </div>
+                        <div class="col-xs-4  text-right">
+                        <span
+                            t-esc="data['total_invoices_by_pay_method_id'][pay_method_id]" />
+                        </div>
+                        <div
+                            class="col-xs-4 text-right"
+                            t-if="data['total_invoices_credit_by_pay_method_id'][pay_method_id] > 0">
+                            <span t-esc="data['total_invoices_credit_by_pay_method_id'][pay_method_id]" />
+                        </div>
+                    </div>
+                    <hr style="margin-top:0; margin-bottom:0;"/>
+                    <div
+                        class="row"
+                        style="font-size: 13px;">
+                        <div class="col-xs-4">
+                            Total Credit
+                        </div>
+                        <div class="col-xs-4 col-xs-offset-4  text-right">
+                                <span
+                                    t-esc="data['credit_total']" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="font-size: 13px;">
+                        <div class="col-xs-4">
+                            Total Sales
+                        </div>
+                        <div class="col-xs-4 text-right">
+                            <strong>
+                        <span
+                            t-esc="data['sales_total']" />
+                        </strong>
+                        </div>
+                    </div>
+
+                    </div>
+                    </div>
+
+                    <hr/>
+                    <h2>Breakdown of invoices by payment method</h2>
+                    <hr/>
+
+                    <div
+                        class="row mt32 mb32"
+                        t-foreach="data['pay_methods_ids']"
+                        t-as="pay_method_id">
+
+                        <div class="row">
+                            <div class="col-xs-9">
+                            <strong>
+                                <t t-esc="data['pay_methods_names_by_id'][pay_method_id]" />
+                            </strong>
+                        </div>
+                            <div class="col-xs-3 text-right">
+                            <span t-esc="data['total_invoices_by_pay_method_id'][pay_method_id]" />
+                            </div>
+                        </div>
+
+                        <hr style="margin-top:0; margin-bottom:0;"/>
+
+                        <div class="row">
+                            <div class="col-xs-8 col-xs-offset-1">
+                            Total Invoices
+                            </div>
+                            <div class="col-xs-3 text-right">
+                            <span t-esc="data['total_invoices_by_pay_method_id'][pay_method_id]" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="row"
+                            t-foreach="data['invoices_by_pay_method_id'][pay_method_id]"
+                            t-as="invoice">
+
+                            <div
+                                class="col-xs-2 col-xs-offset-1"
+                                style="padding-left:30px;">
+                            <span
+                                t-esc="invoice['move_name']" />
+                            </div>
+                            <div class="col-xs-4">
+                            <span
+                                t-esc="invoice['customer']" />
+                            </div>
+                            <div class="col-xs-2">
+                            <span
+                                t-if="invoice['state'] == 'draft'"
+                                class="label label-default">
+                                <t t-esc="invoice['state_label']" />
+                            </span>
+                            <span
+                                t-elif="invoice['state'] == 'open'"
+                                class="label label-primary">
+                                <t t-esc="invoice['state_label']" />
+                            </span>
+                            <span
+                                t-elif="invoice['state'] == 'paid'"
+                                class="label label-success">
+                                <t t-esc="invoice['state_label']" />
+                            </span>
+                            <span t-else="" class="label label-default">
+                                <t t-esc="invoice['state_label']" />
+                            </span>
+                            </div>
+                            <div class="col-xs-3 text-right">
+                            <span
+                                t-esc="invoice['amount_total']" />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <t t-if="data['total_sale_orders_invoices_cancelled'] > 0">
+                    <hr/>
+                    <h2>Invoices Cancelled</h2>
+                    <hr/>
+
+                    <div class="row mt32 mb32">
+
+                        <div class="row">
+                            <div class="col-xs-8 col-xs-offset-1">
+                            Total Invoices
+                            </div>
+                            <div class="col-xs-3 text-right">
+                            <span t-esc="data['total_sale_orders_invoices_cancelled']" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="row"
+                            t-foreach="data['sale_orders_invoices_cancelled_data']"
+                            t-as="invoice">
+
+                            <div
+                                class="col-xs-1 col-xs-offset-1"
+                                style="padding-left:30px;">
+                            <span
+                                t-esc="invoice['move_name']" />
+                            </div>
+                            <div class="col-xs-3">
+                            <span
+                                t-esc="invoice['customer']" />
+                            </div>
+                            <div class="col-xs-3 text-right">
+                                <span
+                                    t-esc="invoice['debit']" />
+                            </div>
+                            <div class="col-xs-3 text-right">
+                            <span
+                                t-esc="invoice['credit']" />
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-xs-3 col-xs-offset-5 text-right">
+                                <span t-esc="data['total_invoices_cancelled_no_credit']" />
+                            </div>
+                            <div class="col-xs-3 text-right">
+                                <span t-esc="data['total_invoices_cancelled_with_credit']" />
+                            </div>
+
+                        </div>
+
+                </div>
+
+                </t>
+
+                </div>
+
+            </t>
+        </template>
+
+    </data>
+</odoo>
