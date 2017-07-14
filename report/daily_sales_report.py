@@ -29,14 +29,14 @@ _logger = logging.getLogger(__name__)
 
 
 class DailySalesReport(models.AbstractModel):
-    _name = 'report.daily_sales_report.report_sales'
+    _name = 'report.ideas_daily_sales_report.report_sales'
 
     @api.model
     def render_html(self, docids, data=None):
         Report = self.env['report']
         SaleOrder = self.env['sale.order']
         report = Report._get_report_from_name(
-            'daily_sales_report.report_sales')
+            'ideas_daily_sales_report.report_sales')
         docs = SaleOrder.browse(docids)
         datetime_today = datetime.today()
         data['extra_data'].update(
@@ -51,4 +51,4 @@ class DailySalesReport(models.AbstractModel):
             'data': data['extra_data'],
         }
 
-        return Report.render('daily_sales_report.report_sales', docargs)
+        return Report.render('ideas_daily_sales_report.report_sales', docargs)

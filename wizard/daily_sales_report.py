@@ -235,7 +235,7 @@ class DailySalesReport(models.TransientModel):
 
             return {
                 'type': 'ir.actions.report.xml',
-                'report_name': 'daily_sales_report.report_sales',
+                'report_name': 'ideas_daily_sales_report.report_sales',
                 'datas': data,
                 }
         else:

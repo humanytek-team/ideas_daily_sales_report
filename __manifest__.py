@@ -21,7 +21,7 @@
 ###############################################################################
 
 {
-    'name': "daily_sales_report",
+    'name': "ideas_daily_sales_report",
     'summary': """Adds a PDF report of sales daily.""",
     'description': """
         Adds a PDF report of sales daily. You should indicate the day and the

@@ -5,7 +5,7 @@
         <template id="report_sales">
             <t t-call="report.html_container">
                 <t
-                    t-call="daily_sales_report.report_sales_document"
+                    t-call="ideas_daily_sales_report.report_sales_document"
                     t-lang="user.partner_id.lang"/>
             </t>
         </template>

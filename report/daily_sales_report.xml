@@ -2,12 +2,12 @@
 <odoo>
     <data>
         <report
-            id="daily_sales_report"
+            id="ideas_daily_sales_report"
             string="Daily sales report"
             model="sale.order"
             report_type="qweb-pdf"
-            file="daily_sales_report.report_sales"
-            name="daily_sales_report.report_sales"
+            file="ideas_daily_sales_report.report_sales"
+            name="ideas_daily_sales_report.report_sales"
         />
     </data>
 </odoo>
