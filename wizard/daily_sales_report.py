@@ -59,7 +59,7 @@ class DailySalesReport(models.TransientModel):
             ('date_order', '<=', wizard_data['date']),
             ('date_order', '>=', wizard_data['date']),
             ('warehouse_id', '=', wizard_data['warehouse_id'][0]),
-            ])
+            ], order='date_order')
 
         if sale_orders:
             data = dict()
@@ -106,8 +106,10 @@ class DailySalesReport(models.TransientModel):
             extra_data['pay_methods_names_by_id'] = pay_methods_names_by_id
 
             invoices_by_pay_method_id = dict()
+            payments_by_pay_method_id = dict()
             for pay_method_id in pay_methods_ids:
                 invoices_by_pay_method_id[pay_method_id] = list()
+                payments_by_pay_method_id[pay_method_id] = list()
                 sale_orders_invoices_by_pay_method = \
                     sale_orders_invoices.filtered(
                         lambda inv: int(pay_method_id) in
@@ -126,7 +128,23 @@ class DailySalesReport(models.TransientModel):
                                 sale_order_invoice.state],
                         }
                     )
+
+                    if sale_order_invoice.payment_ids:
+                        for payment in sale_order_invoice.payment_ids:
+                            if payment.cmpl_type != 'payment':
+                                payment_method_name = payment.cmpl_type
+                            else:
+                                payment_method_name = \
+                                    payment.other_payment.name
+                            payments_by_pay_method_id[pay_method_id].append({
+                                'name': payment.name,
+                                'customer': customer_name,
+                                'payment_method_name': payment_method_name,
+                                'amount': payment.amount,
+                                })
+
             extra_data['invoices_by_pay_method_id'] = invoices_by_pay_method_id
+            extra_data['payments_by_pay_method_id'] = payments_by_pay_method_id
 
             sale_orders_invoices_with_credit = sale_orders.mapped(
                 'invoice_ids').filtered(
@@ -255,6 +273,18 @@ class DailySalesReport(models.TransientModel):
                 )
             extra_data['sale_orders_invoices_with_credit_data'] = \
                 sale_orders_invoices_with_credit_data
+
+            total_payments_by_pay_method_id = dict()
+            for pay_method in pay_methods:
+                total_payments_by_pay_method_id[pay_method.id] = \
+                    sum(sale_orders_invoices
+                        .filtered(
+                            lambda inv: pay_method in inv.pay_method_ids
+                            )
+                        .mapped('payment_ids')
+                        .mapped('amount'))
+            extra_data['total_payments_by_pay_method_id'] = \
+                total_payments_by_pay_method_id
 
             data['extra_data'] = extra_data
 
