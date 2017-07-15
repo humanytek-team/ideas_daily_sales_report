@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="col-xs-3 text-right">
-                            <span t-esc="data['sales_total']" />
+                            <span t-esc="data['sales_total_with_customer_refund']" />
                         </div>
 
                         <div class="col-xs-2 text-right">
@@ -352,6 +352,8 @@
 
                         </div>
 
+                        <hr style="margin-top:0; margin-bottom:0;"/>
+                        
                         <div class="row">
 
                             <div class="col-xs-3 col-xs-offset-5 text-right">

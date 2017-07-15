@@ -69,8 +69,7 @@ class DailySalesReport(models.TransientModel):
             sale_orders_invoices = sale_orders.mapped('invoice_ids').filtered(
                 lambda inv: inv.type == 'out_invoice' and
                 inv.date_invoice == wizard_data['date'] and
-                inv.state != 'cancel' and
-                inv.date_due == inv.date_invoice
+                inv.state != 'cancel'
             )
 
             sales_total = sum(
@@ -161,8 +160,13 @@ class DailySalesReport(models.TransientModel):
             )
             extra_data['total_customer_refund'] = total_customer_refund
 
-            sales_total_minus_customer_refund = sales_total - \
+            sales_total_with_customer_refund = sales_total + \
                 total_customer_refund
+            extra_data['sales_total_with_customer_refund'] = \
+                sales_total_with_customer_refund
+
+            sales_total_minus_customer_refund = \
+                sales_total_with_customer_refund - total_customer_refund
             extra_data['sales_total_minus_customer_refund'] = \
                 sales_total_minus_customer_refund
 
