@@ -20,9 +20,10 @@
 #
 ###############################################################################
 
+from datetime import datetime
+
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-
 
 INVOICE_STATES = {
     'draft': _('Draft'),
@@ -42,7 +43,10 @@ class DailySalesReport(models.TransientModel):
         'stock.warehouse',
         string='Warehouse',
         required=True)
-    date = fields.Date(string='Date', required=True)
+    date = fields.Date(
+        string='Date',
+        required=True,
+        default=datetime.today().strftime('%Y-%m-%d'))
 
     @api.multi
     def print_daily_sales_report(self):
