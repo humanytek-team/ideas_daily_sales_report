@@ -23,6 +23,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
+
 INVOICE_STATES = {
     'draft': _('Draft'),
     'proforma': _('Pro-forma'),
@@ -68,6 +69,10 @@ class DailySalesReport(models.TransientModel):
             ).mapped('id')
 
             extra_data = dict()
+
+            date_split = wizard_data['date'].split('-')
+            extra_data['date'] = '{0}/{1}/{2}'.format(
+                date_split[2], date_split[1], date_split[0])
 
             sale_orders_invoices = sale_orders.mapped('invoice_ids').filtered(
                 lambda inv: inv.type == 'out_invoice' and
