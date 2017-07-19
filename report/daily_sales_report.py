@@ -36,11 +36,8 @@ class DailySalesReport(models.AbstractModel):
             'ideas_daily_sales_report.report_sales')
         docs = SaleOrder.browse(docids)
         datetime_today = datetime.today()
-        data['extra_data'].update(
-            {
-                'datetime': datetime_today.strftime('%d/%m/%y %H:%M:%S'),
-                'date': datetime_today.strftime('%d/%m/%y'),
-            })
+        data['extra_data'].update({
+            'datetime': datetime_today.strftime('%d/%m/%y %H:%M:%S'), })
         docargs = {
             'doc_ids': docids,
             'doc_model': report.model,
