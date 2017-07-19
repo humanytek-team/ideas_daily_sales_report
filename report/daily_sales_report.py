@@ -21,11 +21,7 @@
 ###############################################################################
 
 from datetime import datetime
-import logging
-
 from odoo import api, models
-
-_logger = logging.getLogger(__name__)
 
 
 class DailySalesReport(models.AbstractModel):
@@ -33,6 +29,7 @@ class DailySalesReport(models.AbstractModel):
 
     @api.model
     def render_html(self, docids, data=None):
+        docids = data['ids']
         Report = self.env['report']
         SaleOrder = self.env['sale.order']
         report = Report._get_report_from_name(
