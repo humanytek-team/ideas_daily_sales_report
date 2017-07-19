@@ -20,12 +20,8 @@
 #
 ###############################################################################
 
-import logging
-
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
 
 INVOICE_STATES = {
     'draft': _('Draft'),
@@ -63,7 +59,14 @@ class DailySalesReport(models.TransientModel):
 
         if sale_orders:
             data = dict()
-            data['ids'] = sale_orders.mapped('id')
+            data['ids'] = sale_orders.filtered(
+                lambda so: so.invoice_ids and
+                so.mapped('invoice_ids').filtered(
+                    lambda inv: inv.type == 'out_invoice' and
+                    inv.date_invoice == wizard_data['date']
+                )
+            ).mapped('id')
+
             extra_data = dict()
 
             sale_orders_invoices = sale_orders.mapped('invoice_ids').filtered(
@@ -71,6 +74,10 @@ class DailySalesReport(models.TransientModel):
                 inv.date_invoice == wizard_data['date'] and
                 inv.state != 'cancel'
             )
+
+            if not sale_orders_invoices:
+                raise ValidationError(
+                    _('No sales for the warehouse and day selected'))
 
             sales_total = sum(
                 sale_orders_invoices.mapped('amount_total'))
@@ -288,11 +295,11 @@ class DailySalesReport(models.TransientModel):
 
             data['extra_data'] = extra_data
 
-            return {
-                'type': 'ir.actions.report.xml',
-                'report_name': 'ideas_daily_sales_report.report_sales',
-                'datas': data,
-                }
+            Report = self.env['report']
+            return Report.get_action(
+                self,
+                'ideas_daily_sales_report.report_sales',
+                data=data)
         else:
             raise ValidationError(
                 _('No sales for the warehouse and day selected'))
