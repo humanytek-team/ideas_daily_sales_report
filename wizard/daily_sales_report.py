@@ -81,10 +81,28 @@ class DailySalesReport(models.TransientModel):
             sale_orders_invoices = sale_orders.mapped('invoice_ids').filtered(
                 lambda inv: inv.type == 'out_invoice' and
                 inv.date_invoice == wizard_data['date'] and
-                inv.state != 'cancel'
+                inv.state != 'cancel' and
+                inv.date_due == inv.date_invoice
             )
 
-            if not sale_orders_invoices:
+            sale_orders_invoices_cancelled = sale_orders.mapped('invoice_ids')\
+                .filtered(
+                    lambda inv: inv.type == 'out_invoice' and
+                    inv.date_invoice == wizard_data['date'] and
+                    inv.state == 'cancel'
+                    )
+
+            sale_orders_invoices_with_credit = sale_orders.mapped(
+                'invoice_ids').filtered(
+                    lambda inv: inv.type == 'out_invoice' and
+                    inv.date_invoice == wizard_data['date'] and
+                    inv.state != 'cancel' and
+                    inv.date_due > inv.date_invoice
+                    )
+
+            if not sale_orders_invoices and \
+                    not sale_orders_invoices_cancelled and \
+                    not sale_orders_invoices_with_credit:
                 raise ValidationError(
                     _('No sales for the warehouse and day selected'))
 
@@ -162,14 +180,6 @@ class DailySalesReport(models.TransientModel):
             extra_data['invoices_by_pay_method_id'] = invoices_by_pay_method_id
             extra_data['payments_by_pay_method_id'] = payments_by_pay_method_id
 
-            sale_orders_invoices_with_credit = sale_orders.mapped(
-                'invoice_ids').filtered(
-                    lambda inv: inv.type == 'out_invoice' and
-                    inv.date_invoice == wizard_data['date'] and
-                    inv.state != 'cancel' and
-                    inv.date_due > inv.date_invoice
-                    )
-
             credit_total = sum(
                 sale_orders_invoices_with_credit.mapped('amount_total'))
             extra_data['credit_total'] = credit_total
@@ -222,13 +232,6 @@ class DailySalesReport(models.TransientModel):
 
             extra_data['count_total_invoices_by_pay_method_id'] = \
                 count_total_invoices_by_pay_method_id
-
-            sale_orders_invoices_cancelled = sale_orders.mapped('invoice_ids')\
-                .filtered(
-                    lambda inv: inv.type == 'out_invoice' and
-                    inv.date_invoice == wizard_data['date'] and
-                    inv.state == 'cancel'
-                    )
 
             sale_orders_invoices_cancelled_data = list()
 
