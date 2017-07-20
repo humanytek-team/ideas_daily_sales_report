@@ -70,6 +70,7 @@ class DailySalesReport(models.TransientModel):
                 invoices_by_pay_method_id[pay_method_id].append(
                     {
                         'move_name': invoice.move_name,
+                        'origin': invoice.origin,
                         'customer': customer_name,
                         'amount_total': invoice.amount_total,
                         'state': invoice.state,
@@ -84,8 +85,14 @@ class DailySalesReport(models.TransientModel):
                         else:
                             payment_method_name = \
                                 payment.other_payment.name
+
+                        invoices_names_list = [
+                            inv.move_name for inv in payment.invoice_ids]
+                        invoices_names = ', '.join(invoices_names_list)
+
                         payments_by_pay_method_id[pay_method_id].append({
                             'name': payment.name,
+                            'invoices_names': invoices_names,
                             'customer': customer_name,
                             'payment_method_name': payment_method_name,
                             'amount': payment.amount,
@@ -299,6 +306,7 @@ class DailySalesReport(models.TransientModel):
                 invoice_data = dict()
                 invoice_data = {
                     'move_name': invoice.move_name,
+                    'origin': invoice.origin,
                     'customer': invoice.partner_id.name,
                 }
                 if invoice.date_due > invoice.date_invoice:
@@ -344,6 +352,7 @@ class DailySalesReport(models.TransientModel):
                 sale_orders_invoices_with_credit_data.append(
                     {
                         'move_name': invoice.move_name,
+                        'origin': invoice.origin,
                         'customer': customer_name,
                         'amount_total': invoice.amount_total,
                         'state': invoice.state,
