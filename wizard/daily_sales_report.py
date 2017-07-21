@@ -176,7 +176,8 @@ class DailySalesReport(models.TransientModel):
                 .mapped('invoice_ids') \
                 .filtered(
                     lambda inv: inv.type == 'out_refund' and
-                    inv.date_invoice == wizard_data['date']
+                    inv.date_invoice == wizard_data['date'] and
+                    inv.state != 'cancel'
                     )
 
             sales_total_with_customer_refund = sum(
