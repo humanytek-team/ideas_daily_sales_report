@@ -198,15 +198,7 @@ class DailySalesReport(models.TransientModel):
                         pay.payment_date == wizard_data['date']
                     )
 
-            payments_done_customer_refund = sale_orders_invoices_out_refund \
-                .mapped('payment_ids') \
-                .filtered(
-                        lambda pay: pay.payment_type == 'outbound' and
-                        pay.payment_date == wizard_data['date']
-                    )
-
-            payments_done_total = sum(payments_done.mapped('amount')) - \
-                sum(payments_done_customer_refund.mapped('amount'))
+            payments_done_total = sum(payments_done.mapped('amount'))
 
             extra_data['payments_done_total'] = payments_done_total
 

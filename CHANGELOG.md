@@ -32,3 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.2.1] - 2017-07-20
 ### changed
 - Fix filter of invoices of customer refund for exclude the invoice of customer refund cancelled.
+
+## [1.2.2] - 2017-07-21
+### changed
+- Substraction of payments done to refund invoices is eliminated of total payments printed in the report.
