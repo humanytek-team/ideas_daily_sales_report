@@ -21,6 +21,7 @@
 ###############################################################################
 
 from datetime import datetime
+from pytz import timezone
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -106,6 +107,24 @@ class DailySalesReport(models.TransientModel):
 
         return invoices_and_payments
 
+    @api.model
+    def _get_date_to_user_timezone(self, datetime_to_convert):
+        """Returns the datetime received converted to a date set to
+        timezone of user"""
+
+        tz = self.env.context.get('tz', False)
+        if not tz:
+            tz = 'US/Arizona'
+
+        datetime_now_with_tz = datetime.now(timezone(tz))
+        utc_difference_timedelta = datetime_now_with_tz.utcoffset()
+        datetime_to_convert = datetime.strptime(
+            datetime_to_convert, '%Y-%m-%d %H:%M:%S')
+        datetime_result = datetime_to_convert + utc_difference_timedelta
+        date_result = datetime_result.strftime('%Y-%m-%d')
+
+        return date_result
+
     @api.multi
     def print_daily_sales_report(self):
         """Print report Daily Sales Report"""
@@ -113,12 +132,18 @@ class DailySalesReport(models.TransientModel):
         self.ensure_one()
         wizard_data = self.read(['warehouse_id', 'date'])[0]
         SaleOrder = self.env['sale.order']
-        sale_orders = SaleOrder.search([
+        all_sale_orders = SaleOrder.search([
             ('state', '=', 'sale'),
-            ('date_order', '<=', wizard_data['date']),
-            ('date_order', '>=', wizard_data['date']),
             ('warehouse_id', '=', wizard_data['warehouse_id'][0]),
             ], order='date_order')
+
+        sale_orders = all_sale_orders.filtered(
+            lambda so:
+            self._get_date_to_user_timezone(so.date_order) <=
+            wizard_data['date'] and
+            self._get_date_to_user_timezone(so.date_order) >=
+            wizard_data['date']
+        )
 
         if sale_orders:
 
