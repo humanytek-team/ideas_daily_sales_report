@@ -21,6 +21,8 @@
 ###############################################################################
 
 from datetime import datetime
+from pytz import timezone
+
 from odoo import api, models
 
 
@@ -35,9 +37,12 @@ class DailySalesReport(models.AbstractModel):
         report = Report._get_report_from_name(
             'ideas_daily_sales_report.report_sales')
         docs = SaleOrder.browse(docids)
-        datetime_today = datetime.today()
+        tz = self.env.context.get('tz', False)
+        if not tz:
+            tz = 'US/Arizona'
+        datetime_now = datetime.now(timezone(tz))
         data['extra_data'].update({
-            'datetime': datetime_today.strftime('%d/%m/%y %H:%M:%S'), })
+            'datetime': datetime_now.strftime('%d/%m/%y %H:%M:%S'), })
         docargs = {
             'doc_ids': docids,
             'doc_model': report.model,
