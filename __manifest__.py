@@ -30,7 +30,7 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Sales',
-    'version': '0.1.0',
+    'version': '1.2.4',
     'depends': ['sale', 'stock', 'argil_odoo_mexico'],
     'data': [
         'report/daily_sales_report_templates.xml',

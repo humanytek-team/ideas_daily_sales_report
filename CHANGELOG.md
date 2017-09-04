@@ -6,21 +6,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [1.0.0] - 2017-07-14
-### added
-- Adds a PDF report of sales daily by warehouse. You should indicate the day and the warehouse through a wizard.
 
-## [1.0.1] - 2017-07-18
+## [1.2.4] - 2017-09-04
 ### changed
-- Update dependencies of other addons and fix the bug that caused that odoo did not find the css used in the report.
+- Removes reference to document origin (sale order) in lines of invoices presented in the report.
 
-## [1.0.2] - 2017-07-19
+## [1.2.3] - 2017-07-21
 ### changed
-- Fix bug in date printed for the sales done in the report.
+- Now are selected all sales with order date based on timezone of the user that generate the report.
+- Now the datetime of generated the report is printed in time zone of the user.
 
-## [1.1.0] - 2017-07-19
+## [1.2.2] - 2017-07-21
 ### changed
-- Changes field date in model of wizard for set the current date as the default value.
+- Substraction of payments done to refund invoices is eliminated of total payments printed in the report.
+
+## [1.2.1] - 2017-07-20
+### changed
+- Fix filter of invoices of customer refund for exclude the invoice of customer refund cancelled.
 
 ## [1.2.0] - 2017-07-20
 ### changed
@@ -29,15 +31,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The code was refactorised for better performance and readability.
 - Adds document origin (sale order name) to lines of invoices grouped by payment method. Also adds document(s) origin (invoices names) to lines of payments of invoices grouped by payment method.
 
-## [1.2.1] - 2017-07-20
+## [1.1.0] - 2017-07-19
 ### changed
-- Fix filter of invoices of customer refund for exclude the invoice of customer refund cancelled.
+- Changes field date in model of wizard for set the current date as the default value.
 
-## [1.2.2] - 2017-07-21
+## [1.0.2] - 2017-07-19
 ### changed
-- Substraction of payments done to refund invoices is eliminated of total payments printed in the report.
+- Fix bug in date printed for the sales done in the report.
 
-## [1.2.3] - 2017-07-21
+## [1.0.1] - 2017-07-18
 ### changed
-- Now are selected all sales with order date based on timezone of the user that generate the report.
-- Now the datetime of generated the report is printed in time zone of the user.
+- Update dependencies of other addons and fix the bug that caused that odoo did not find the css used in the report.
+
+## [1.0.0] - 2017-07-14
+### added
+- Adds a PDF report of sales daily by warehouse. You should indicate the day and the warehouse through a wizard.
