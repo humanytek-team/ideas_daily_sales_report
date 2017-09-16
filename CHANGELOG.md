@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [1.2.5] - 2017-09-16
+### changed
+- The report shows the name of the company parent in cases where the invoice was done for a contact of the customer.
+
 ## [1.2.4] - 2017-09-04
 ### changed
 - Removes reference to document origin (sale order) in lines of invoices presented in the report.
