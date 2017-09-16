@@ -65,8 +65,11 @@ class DailySalesReport(models.TransientModel):
                     inv.pay_method_ids.mapped('id'))
 
             for invoice in invoices_by_pay_method:
+                
                 customer_name = \
-                    invoice.partner_id.name.upper()
+                    invoice.partner_id.name.upper() \
+                    if invoice.partner_id.name \
+                    else invoice.partner_id.parent_id.name
 
                 invoices_by_pay_method_id[pay_method_id].append(
                     {
@@ -366,7 +369,10 @@ class DailySalesReport(models.TransientModel):
             sale_orders_invoices_with_credit_data = list()
             for invoice in sale_orders_invoices_with_credit:
                 customer_name = \
-                    invoice.partner_id.name.upper()
+                    invoice.partner_id.name.upper() \
+                    if invoice.partner_id.name \
+                    else invoice.partner_id.parent_id.name
+
                 sale_orders_invoices_with_credit_data.append(
                     {
                         'move_name': invoice.move_name,
