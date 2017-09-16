@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+
+## [1.2.5] - 2017-09-16
 ### changed
 - The report shows the name of the company parent in cases where the invoice was done for a contact of the customer.
 
